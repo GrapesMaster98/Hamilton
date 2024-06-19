@@ -14,9 +14,9 @@ program.command('new')
 .option('--first', 'first name')
 .action((out, options) => {
     if(options.first) {
-        CreateProject(out, true);
+        CreateProject(out, true, false);
     } else {
-        Questions();
+        Questions(out);
     }
 });
 
