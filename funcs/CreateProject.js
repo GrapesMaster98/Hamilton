@@ -1,5 +1,5 @@
 import {execSync} from 'child_process';
-import { confirm, password, select } from '@inquirer/prompts';
+import { confirm, input, password, select } from '@inquirer/prompts';
 import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
@@ -24,14 +24,13 @@ const moveFiles = (sourceDir, targetDir) => {
     fs.rmdirSync(sourceDir);
 };
 
-const createEnvFile = (dir, token) => {
-    const envContent = `TOKEN=${token}\n`;
+const createEnvFile = (dir, token, cid) => {
+    const envContent = `TOKEN=${token}\nAPP_ID=${cid}\n`;
     const envPath = path.join(dir, '.env');
     fs.writeFileSync(envPath, envContent);
-    console.log(chalk.green('.env file created successfully!'));
 };
 
-export const CreateProject = async (name, useTS, useNoLint, botToken) => {
+export const CreateProject = async (name, appId, useTS, useNoLint, botToken) => {
     const repo = 'https://github.com/GrapesMaster98/Hamilton-Templates.git';
     const folderMap = {
         Regular: 'Regular',
@@ -67,10 +66,17 @@ export const CreateProject = async (name, useTS, useNoLint, botToken) => {
 
         console.log(chalk.yellow('Files moved sucesfully. Installing dependencies...'));
         if (!RunCommand(`npm install`, projectDir)) throw new Error('Failed to install dependencies');
-        createEnvFile(projectDir, botToken);
+        createEnvFile(projectDir, botToken, appId);
 
+        console.log();
         console.log(chalk.green('Project created successfully!'));
-        console.log(`To start the project, run: ${chalk.blue('cd ' + name + ' && npm run start')} \n\n ${chalk.green('Happy coding!')}`);
+        console.log();
+        console.log(`To start the project, run: ${chalk.blueBright('cd ' + name + ' && npm run dev')}, this will deploy your project with a placeholder command.`);
+        console.log();
+        console.log(`Or you can start coding now by using ${chalk.green('cd ' + name)}!`)
+        console.log();
+        console.log(chalk.green('Thanks for using Hamilton! Happy coding! :D'));
+        
     } catch (e) {
         console.log(chalk.red('Failed to create project.'));
         console.error(`There was an error while creating the project:`, e);
@@ -82,6 +88,7 @@ export const CreateProject = async (name, useTS, useNoLint, botToken) => {
 export const Questions = async (projectName) => {
     const botoptions = {
         botToken: await password({ message: 'Please input your bot token:' }),
+        appId: await input({ message: 'Please input your APP ID:' }),
         template: await select({
             message: 'Which template would you like to use?',
             choices: [
@@ -94,5 +101,5 @@ export const Questions = async (projectName) => {
 
     const useTS = botoptions.template === 'TS';
     const useNoLint = botoptions.template === 'NoLint';
-    CreateProject(projectName, useTS, useNoLint, botoptions.botToken);
+    CreateProject(projectName, botoptions.appId, useTS, useNoLint, botoptions.botToken);
 }
