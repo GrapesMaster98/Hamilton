@@ -45,9 +45,9 @@ body:
       options:
         - label: I have searched for and ensured there isn't already an open issue regarding this.
           required: true
-        - label: My question is not related to any coding/general programming issue
+        - label: My question is not related to any coding/general programming issue.
           required: true
-        - label: I confirmed that my issue is related to Hamilton and not other tools or software I use
+        - label: I confirmed that my issue is related to Hamilton and not other tools or software I use.
           required: true
-        - label: I ticked all the boxes without actually reading them
+        - label: I ticked all the boxes without actually reading them.
           required: false
