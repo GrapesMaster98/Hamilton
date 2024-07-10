@@ -1,0 +1,53 @@
+name: Bug Report
+description: Found something weird? Report it using this option.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill all the information and read it carefully. Issues asking for help with how to code your bot are going to be closed and ignored.
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What you expected to see.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Observed/Actual behavior
+      description: What you actually saw.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: What OS are you using?
+      options:
+        - Windows
+        - Linux
+        - MacOS
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps/models to reproduce
+      description: This may include a video or step by step instructions
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Hamilton version
+      description: "Run `hamilton --version` and paste the output here"
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Agreements
+      description: Please agree to the following.
+      options:
+        - label: I have searched for and ensured there isn't already an open issue regarding this.
+          required: true
+        - label: My question is not related to any coding/general programming issue.
+          required: true
+        - label: I confirmed that my issue is related to Hamilton and not other tools or software I use.
+          required: true
+        - label: I ticked all the boxes without actually reading them.
+          required: false
